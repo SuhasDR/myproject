@@ -1,0 +1,162 @@
+ elif readEmails():
+            mail = imaplib.IMAP4_SSL('imap.gmail.com')
+            mail.login('your_email@gmail.com', 'your_password')
+            mail.select('inbox')
+
+            result, data = mail.search(None, 'ALL')
+            mail_ids = data[0]
+            id_list = mail_ids.split()   
+            first_email_id = int(id_list[0])
+            latest_email_id = int(id_list[-1])
+
+            for i in range(latest_email_id, latest_email_id-5, -1):
+            result, data = mail.fetch(str(i), '(RFC822)' )
+        for response_part in data:
+            if isinstance(response_part, tuple):
+                msg = email.message_from_bytes(response_part[1])
+                email_subject = msg['subject']
+                email_from = msg['from']
+                speak(f'Email from {email_from} with subject {email_subject}')
+
+            mail.logout()
+            
+        def face_recognition_check():
+            reference_image = face_recognition.load_image_file("reference_image.png")
+            reference_encoding = face_recognition.face_encodings(reference_image)[0]
+
+            video_capture = cv2.VideoCapture(0)
+
+         while True:
+            ret, frame = video_capture.read()
+            if not ret:
+            break
+
+        rgb_frame = frame[:, :, ::-1]
+        face_locations = face_recognition.face_locations(rgb_frame)
+        face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
+
+        for face_encoding in face_encodings:
+            matches = face_recognition.compare_faces([reference_encoding], face_encoding)
+            face_distances = face_recognition.face_distance([reference_encoding], face_encoding)
+            best_match_index = np.argmin(face_distances)
+            if matches[best_match_index]:
+                print("Face recognized. Starting voice assistant...")
+                video_capture.release()
+                cv2.destroyAllWindows()
+                return True
+
+        cv2.imshow('Video', frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    video_capture.release()
+    cv2.destroyAllWindows()
+    return False
+
+Instagram :
+
+pip install selenium
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+def searchInstagram(query):
+    driver = webdriver.Chrome(executable_path='path_to_chromedriver')
+    driver.get("https://www.instagram.com/")
+    time.sleep(3)
+
+    search_box = driver.find_element_by_xpath("//input[@placeholder='Search']")
+    search_box.send_keys(query)
+    time.sleep(2)
+    search_box.send_keys(Keys.ENTER)
+    time.sleep(1)
+    search_box.send_keys(Keys.ENTER)
+    time.sleep(3)
+
+    speak(f"Here are the results for {query} on Instagram")
+    driver.close()
+
+
+   daily task :
+
+def remind_task(task):
+    speak(f"Reminder: {task}")
+
+def schedule_task(task, time_str):
+    schedule.every().day.at(time_str).do(remind_task, task)
+
+def start_reminder_service():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+google maps :
+
+def open_google_maps(location):
+    url = f"https://www.google.com/maps/search/{location}"
+    webbrowser.open(url)
+    speak(f"Here is the location of {location} on Google Maps.")
+
+
+face-recognition
+
+def face_recognition_check():
+    reference_image = face_recognition.load_image_file("reference_image.png")
+    reference_encoding = face_recognition.face_encodings(reference_image)[0]
+
+    video_capture = cv2.VideoCapture(0)
+
+    while True:
+        ret, frame = video_capture.read()
+        if not ret:
+            break
+
+        rgb_frame = frame[:, :, ::-1]
+        face_locations = face_recognition.face_locations(rgb_frame)
+        face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
+
+        for face_encoding in face_encodings:
+            matches = face_recognition.compare_faces([reference_encoding], face_encoding)
+            face_distances = face_recognition.face_distance([reference_encoding], face_encoding)
+            best_match_index = np.argmin(face_distances)
+            if matches[best_match_index]:
+                print("Face recognized. Starting voice assistant...")
+                video_capture.release()
+                cv2.destroyAllWindows()
+                return True
+
+        cv2.imshow('Video', frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    video_capture.release()
+    cv2.destroyAllWindows()
+    return False
+
+
+WHtsapp :
+
+
+elif 'send whatsapp message':
+            webbrowser.open('https://web.whatsapp.com/')
+            speak("Please tell me the phone number with country code")
+            phone_number = takeCommand().lower()
+            speak("What message should I send?")
+            message = takeCommand().lower()
+    
+            kit.sendwhatmsg_instantly(phone_number, message)
+            speak("Message has been sent")
+            
+        elif' send message to name':
+            webbrowser.open('https://web.whatsapp.com/')
+            speak("Please tell me the name of that person")
+            name = takeCommand().lower()
+            speak("What message should I send?")
+            message = takeCommand().lower()
+    
+            kit.sendwhatmsg_instantly(name, message)
+            speak("Message has been sent") 
+ 
+       
+            
+       
